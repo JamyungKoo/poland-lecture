@@ -1,0 +1,383 @@
+/* =========================================================
+   시안 B — Playable HTML / 인터랙티브 슬라이드 강의
+   - 한 뷰포트 고정, → 키로 reveal·슬라이드 진행
+   ========================================================= */
+
+html, body { height: 100%; overflow: hidden; }
+body { background: var(--color-paper); }
+
+/* -------- 진도·헤더 -------- */
+.deck-head {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-6);
+  background: rgba(250, 247, 241, 0.92);
+  backdrop-filter: saturate(140%) blur(6px);
+  border-bottom: 1px solid var(--color-rule);
+  z-index: 50;
+}
+.deck-head .brand {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-size: 0.95rem;
+  color: var(--color-ink);
+  margin-right: var(--space-5);
+}
+.deck-head .brand .accent { color: var(--color-accent); }
+.deck-head .breadcrumb {
+  font-size: 0.85rem;
+  color: var(--color-ink-mute);
+  flex: 1;
+}
+.deck-head .breadcrumb a { color: var(--color-ink-soft); border: none; }
+.deck-head .counter {
+  font-family: var(--font-serif);
+  font-feature-settings: "tnum";
+  font-size: 0.95rem;
+  color: var(--color-ink-soft);
+  letter-spacing: 0.02em;
+}
+.deck-head .counter .now { color: var(--color-accent); font-weight: 700; }
+
+.progress-bar {
+  position: fixed;
+  top: 56px; left: 0; right: 0;
+  height: 2px;
+  background: var(--color-rule-soft);
+  z-index: 49;
+}
+.progress-bar .fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-deep));
+  transition: width 0.4s cubic-bezier(.4,.0,.2,1);
+}
+
+/* -------- 키 안내 (하단 고정) -------- */
+.keyhint {
+  position: fixed;
+  bottom: var(--space-5);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-2) var(--space-5);
+  background: rgba(26, 22, 18, 0.9);
+  color: rgba(250, 247, 241, 0.85);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.keyhint.show { opacity: 1; }
+.keyhint kbd {
+  display: inline-block;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  margin: 0 4px;
+}
+
+/* -------- 슬라이드 컨테이너 -------- */
+.deck {
+  position: fixed;
+  top: 58px; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+}
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-7);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.45s cubic-bezier(.4,.0,.2,1);
+}
+.slide.active { opacity: 1; visibility: visible; }
+.slide.exit-prev { transform: translateX(-3%); }
+.slide.exit-next { transform: translateX(3%); }
+
+.slide-inner {
+  max-width: 1080px;
+  width: 100%;
+  max-height: 100%;
+  overflow: auto;
+  padding: var(--space-4);
+}
+
+/* reveal — 키 누르면 순차 등장 */
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s cubic-bezier(.2,.0,.0,1), transform 0.5s cubic-bezier(.2,.0,.0,1);
+}
+.reveal.show { opacity: 1; transform: translateY(0); }
+.reveal.fade-img { transform: scale(0.98); }
+.reveal.fade-img.show { transform: scale(1); }
+
+/* -------- 슬라이드 타입별 레이아웃 -------- */
+
+/* 타이틀 슬라이드 */
+.slide-title {
+  text-align: center;
+}
+.slide-title .eyebrow {
+  display: inline-block;
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: var(--space-5);
+}
+.slide-title h1 {
+  font-size: 4rem;
+  line-height: 1.1;
+  margin-bottom: var(--space-5);
+}
+.slide-title h1 .ko { display: block; margin-top: var(--space-3); font-size: 2.2rem; color: var(--color-ink-soft); }
+.slide-title .subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--color-ink-soft);
+  max-width: 32em;
+  margin: 0 auto var(--space-6);
+}
+.slide-title .meta {
+  font-size: 0.85rem;
+  color: var(--color-ink-mute);
+  letter-spacing: 0.06em;
+}
+
+/* 큰 질문(후킹) 슬라이드 */
+.slide-question {
+  text-align: center;
+}
+.slide-question .q-mark {
+  font-family: var(--font-serif);
+  font-size: 6rem;
+  color: var(--color-accent);
+  line-height: 1;
+  margin-bottom: var(--space-4);
+  opacity: 0.85;
+}
+.slide-question .q-text {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 2.6rem;
+  line-height: 1.35;
+  max-width: 22em;
+  margin: 0 auto;
+  color: var(--color-ink);
+}
+.slide-question .q-sub {
+  margin-top: var(--space-5);
+  font-size: 1.05rem;
+  color: var(--color-ink-mute);
+  max-width: 30em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 본문 슬라이드 (좌: 이미지, 우: 텍스트) */
+.slide-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-7);
+  align-items: center;
+  width: 100%;
+}
+.slide-split .visual {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.slide-split .visual img { width: 100%; display: block; }
+.slide-split .visual .caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: var(--space-4) var(--space-5);
+  background: linear-gradient(0deg, rgba(0,0,0,0.7), transparent);
+  color: #fff;
+  font-size: var(--fs-small);
+}
+.slide-split .body .kicker { color: var(--color-accent); margin-bottom: var(--space-3); }
+.slide-split .body h2 { font-size: 2.2rem; margin-bottom: var(--space-5); line-height: 1.2; }
+.slide-split .body .points { list-style: none; padding: 0; margin: 0; }
+.slide-split .body .points li {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-rule);
+  font-size: 1.05rem;
+  display: flex;
+  gap: var(--space-3);
+}
+.slide-split .body .points li:last-child { border-bottom: 0; }
+.slide-split .body .points li .num {
+  font-family: var(--font-serif);
+  color: var(--color-accent);
+  font-weight: 700;
+  flex: 0 0 1.5em;
+}
+
+/* 통계 카드 슬라이드 */
+.slide-stats {
+  text-align: center;
+  width: 100%;
+}
+.slide-stats h2 {
+  font-size: 2rem;
+  margin-bottom: var(--space-7);
+}
+.slide-stats .stat-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-6);
+  max-width: 960px;
+  margin: 0 auto;
+}
+.slide-stats .stat {
+  padding: var(--space-5);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  background: var(--color-paper-soft);
+}
+.slide-stats .stat .big {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--color-accent-deep);
+  line-height: 1;
+  margin-bottom: var(--space-3);
+}
+.slide-stats .stat .label {
+  font-size: 0.95rem;
+  color: var(--color-ink-soft);
+}
+
+/* 거울 비교 (한국 vs 폴란드) */
+.slide-mirror {
+  width: 100%;
+}
+.slide-mirror h2 { text-align: center; margin-bottom: var(--space-6); }
+.slide-mirror .mirror-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--space-5);
+  max-width: 920px;
+  margin: 0 auto;
+}
+.slide-mirror .col {
+  padding: var(--space-5);
+  background: var(--color-paper-soft);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-rule);
+}
+.slide-mirror .col.korea { border-top: 4px solid #0047A0; }
+.slide-mirror .col.poland { border-top: 4px solid var(--color-accent); }
+.slide-mirror .col h3 {
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: var(--space-4);
+  letter-spacing: 0.04em;
+}
+.slide-mirror .col dl { margin: 0; }
+.slide-mirror .col dt { font-size: 0.78rem; color: var(--color-ink-mute); text-transform: uppercase; letter-spacing: 0.06em; margin-top: var(--space-3); }
+.slide-mirror .col dd { margin: 4px 0 0; font-size: 1rem; font-weight: 600; }
+.slide-mirror .vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+/* 결론 슬라이드 */
+.slide-conclusion {
+  text-align: center;
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+.slide-conclusion .eyebrow { color: var(--color-accent-soft); letter-spacing: 0.3em; font-size: 0.85rem; }
+.slide-conclusion h2 { color: var(--color-paper); font-size: 2.6rem; margin: var(--space-5) auto; max-width: 18em; line-height: 1.3; }
+.slide-conclusion p { color: rgba(250, 247, 241, 0.75); font-size: 1.1rem; max-width: 32em; margin: 0 auto; }
+
+/* -------- 인터랙티브 위젯 -------- */
+
+/* 클릭 가능한 핫스팟 (지도 위 점) */
+.hotspot {
+  position: absolute;
+  width: 18px; height: 18px;
+  background: var(--color-accent);
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 0 0 4px rgba(200, 16, 46, 0.25);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s;
+}
+.hotspot:hover { transform: translate(-50%, -50%) scale(1.3); }
+.hotspot.active { background: var(--color-accent-deep); box-shadow: 0 0 0 6px rgba(200, 16, 46, 0.35); }
+
+/* 토글 탭 (학계 합의 vs 한국 인식) */
+.toggle-tabs {
+  display: inline-flex;
+  background: var(--color-rule-soft);
+  border-radius: 999px;
+  padding: 4px;
+  margin: var(--space-4) 0;
+}
+.toggle-tabs button {
+  border: 0;
+  background: transparent;
+  padding: var(--space-2) var(--space-5);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: var(--color-ink-soft);
+  font-family: inherit;
+}
+.toggle-tabs button.active {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+/* 페이드 카드 그룹 */
+.flip-card {
+  display: inline-block;
+  padding: var(--space-3) var(--space-5);
+  background: var(--color-paper-soft);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius);
+  margin: var(--space-2);
+  font-size: 0.95rem;
+}
+.flip-card .label { font-size: 0.75rem; color: var(--color-ink-mute); text-transform: uppercase; letter-spacing: 0.06em; display: block; }
+.flip-card .value { color: var(--color-ink); font-weight: 600; }
+
+/* 반응형 */
+@media (max-width: 880px) {
+  .slide-title h1 { font-size: 2.4rem; }
+  .slide-title h1 .ko { font-size: 1.4rem; }
+  .slide-question .q-text { font-size: 1.6rem; }
+  .slide-split { grid-template-columns: 1fr; gap: var(--space-5); }
+  .slide-stats .stat-row { grid-template-columns: 1fr; }
+  .slide-mirror .mirror-grid { grid-template-columns: 1fr; }
+  .slide-mirror .vs { display: none; }
+  .slide-conclusion h2 { font-size: 1.8rem; }
+}

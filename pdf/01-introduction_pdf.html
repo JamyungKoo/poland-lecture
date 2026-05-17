@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1회 · 폴란드라는 나라 — 첫인상과 좌표 | 폴란드 교양강의 (PDF)</title>
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/handout.css">
+<style>
+  /* ===== PDF 전용 — A4 portrait + 강제 컨테이너 폭 ===== */
+
+  /* A4 인쇄 영역 계산:
+   *   A4 portrait = 210 × 297 mm = 794 × 1123 px (96dpi)
+   *   @page margin 18mm 양쪽 = 68px × 2 = 136px
+   *   인쇄 영역 폭 x = 794 - 136 = 658 px
+   *   PDF 컨테이너 = x - 4 = 654 px (양쪽 안전 마진 -2px)
+   */
+
+  @page { size: A4 portrait; margin: 18mm 18mm; }
+
+  /* box-sizing 전역 강제 (패딩 포함해서 폭 계산) */
+  *, *::before, *::after { box-sizing: border-box; }
+
+  /* 색상 정확 인쇄 */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 사이드바·네비게이션·외부 링크 숨김 */
+  .minitoc,
+  .breadcrumb,
+  .next-up .actions,
+  .page-footer { display: none !important; }
+
+  /* 기준 폰트: A4 본문 표준 11pt (≈ 14.67px) */
+  html { font-size: 11pt; }
+  body {
+    background: var(--color-paper);
+    line-height: 1.65;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ★ PDF 본문 컨테이너 — 654px 강제 + overflow hidden 안전망 ★ */
+  .layout {
+    display: block !important;
+    width: 654px !important;
+    max-width: 654px !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    overflow: hidden !important;
+    grid-template-columns: none !important;
+  }
+  main {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* 모든 콘텐츠가 컨테이너 안에 강제 fit */
+  .prose, .beat, header.page-head,
+  .summary-box, .korea-poland, .compare, .compare-card,
+  .pullquote, .sidenote, .next-up, figure,
+  blockquote, p, h1, h2, h3, h4, h5, h6,
+  ul, ol, li, table {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 이미지: 컨테이너 폭 fit, 비율 유지 */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* 페이지 분할 — 작은 단위만 보호. .beat·.compare는 빼서 빈 페이지 방지 */
+  .summary-box,
+  .compare-card,
+  .pullquote,
+  .sidenote,
+  .next-up,
+  .pdf-strip,
+  .beat-header,
+  figure {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  hr {
+    page-break-after: auto;
+    break-after: auto;
+    margin: 1.5rem 0 !important;
+  }
+
+  /* ★ .split 좌우 분할 강제 — handout.css 880px 모바일 룰 override ★ */
+  .split {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.4rem !important;
+    align-items: start !important;
+  }
+  .split > figure {
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+  .split > figure img {
+    max-width: 100% !important;
+    max-height: none !important;  /* 셀 폭(약 300px)에 자연 fit */
+    width: auto !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 auto !important;
+  }
+
+  /* 단독 figure (.split 밖) — max 600 × 600 투명 박스 안에 fit + 센터 정렬 */
+  figure {
+    max-width: 600px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+  }
+  figure img {
+    max-width: 100% !important;
+    max-height: 600px !important;
+    width: auto !important;
+    height: auto !important;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* horizon line + 텍스트 비교 블록 — 박스 대신 깔끔한 라인 스트립 */
+  .pdf-strip {
+    border-top: 1px solid var(--color-rule);
+    border-bottom: 1px solid var(--color-rule);
+    padding: 0.9rem 0 1rem !important;
+    margin: 1.6rem 0 !important;
+    text-align: left;
+  }
+  .pdf-strip.center { text-align: center; }
+  .pdf-strip p {
+    margin: 0.45rem 0 !important;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  .pdf-strip .strip-label {
+    display: inline-block;
+    min-width: 4.5em;
+    color: var(--color-ink-soft, #666);
+    font-weight: 600;
+    margin-right: 0.4em;
+  }
+
+  figcaption { font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- ============== 좌측 sticky 미니 목차 (PDF: 숨김) ============== -->
+  <aside class="minitoc">
+    <div class="minitoc-title">1회차 · 목차</div>
+    <ol>
+      <li><a href="#open"><span class="num">00</span>오프닝</a></li>
+      <li><a href="#beat-1"><span class="num">01</span>좌표 — 어디 있는가</a></li>
+      <li><a href="#beat-2"><span class="num">02</span>사람 — 누구인가</a></li>
+      <li><a href="#beat-3"><span class="num">03</span>상징 — 무엇으로 자기를 드러내는가</a></li>
+      <li><a href="#next"><span class="num">→</span>다음 회차 예고</a></li>
+    </ol>
+  </aside>
+
+  <!-- ============== 본문 ============== -->
+  <main>
+
+    <!-- 페이지 헤더 -->
+    <header class="page-head">
+      <div class="breadcrumb">
+        <a href="../index.html">← 폴란드 교양강의</a> &middot; 1회차
+      </div>
+      <span class="kicker">Lecture 01</span>
+      <h1>폴란드라는 나라<br>— 첫인상과 좌표</h1>
+      <p class="subtitle">첫 여행자가 가장 먼저 마주치는 질문 하나. <strong>폴란드는 동유럽인가, 중부유럽인가, 아니면 그 어느 쪽도 아닌가.</strong> 이 한 물음에서부터 한 나라의 자기 인식이 펼쳐진다.</p>
+      <div class="meta">
+        <span><strong>분량</strong> 60분</span>
+        <span><strong>구성</strong> 오프닝 + 3 Beat</span>
+        <span><strong>대상</strong> 폴란드 첫 여행자</span>
+        <span><strong>전제 지식</strong> 없음</span>
+      </div>
+    </header>
+
+    <!-- ===================== 오프닝 ===================== -->
+    <section class="beat" id="open">
+      <div class="beat-header">
+        <span class="beat-num">00</span>
+        <h2>오프닝 — 왜 폴란드인가</h2>
+        <span class="beat-time">5분</span>
+      </div>
+
+      <div class="prose">
+        <p>유럽에 가는 한국인 여행자 열에 아홉은 서유럽을 본다. 파리·런던·로마·바르셀로나. 그 다음은 베를린·암스테르담·프라하. 그리고 가끔 동쪽으로 한 발을 더 디딘 사람들이 비로소 폴란드를 만난다. <strong>그런데 그 "동쪽"이라는 단어가 함정이다.</strong></p>
+
+        <p>한국에서 폴란드는 흔히 "동유럽 국가"로 분류된다. 항공사 노선표에도, 여행 책자의 목차에도, 신문 외신면에도 그렇게 쓰여 있다. 그러나 폴란드 사람에게 "동유럽에서 오셨군요"라고 인사하면, 절반 이상은 정중하게 — 또는 정중하지 않게 — 정정한다. <em>"We are Central Europe."</em></p>
+
+        <p>이 정정에는 천 년의 무게가 실려 있다. 지리, 종교, 문자, 정치, 그리고 마지막으로 냉전이라는 짧지만 강렬했던 한 막의 역사. 이 시리즈의 첫 회를 여는 우리의 질문은 그래서 단순하다.</p>
+      </div>
+
+      <blockquote class="pullquote">
+        폴란드는 어디에 있는가.<br>
+        그리고 폴란드인은 자신이 어디에 있다고 믿는가.
+        <cite>— 1회차 큰 질문</cite>
+      </blockquote>
+
+      <div class="prose">
+        <p>여행은 결국 그곳 사람들의 자기 인식 안으로 들어가는 일이다. 우리가 누군가의 집에 초대받았을 때, 그가 자신을 어떻게 소개하는지를 들어야 그를 만나는 것이지, 우리 머릿속의 라벨로 그를 부르는 것이 아니다. 폴란드 여행도 마찬가지다.</p>
+
+        <p>오늘 60분 동안 우리는 세 가지를 함께 본다. <strong>① 좌표</strong> — 폴란드는 지리적으로 어디 있는가. <strong>② 사람</strong> — 폴란드인은 누구인가, 어떤 정체성의 삼중구조 위에 서 있는가. <strong>③ 상징</strong> — 폴란드는 자기를 무엇으로 드러내는가, 그 상징들은 왜 하나같이 "사라졌던 시대"의 흔적인가.</p>
+      </div>
+
+      <aside class="sidenote">
+        <div class="sidenote-title">시리즈 6회 미리보기</div>
+        1회 폴란드라는 나라 · 2회 천 년의 역사 · 3회 쇼팽의 나라, 영화의 나라 · 4회 도시를 걷다 · 5회 바르샤바 집중 · 6회 바르샤바 가이드 투어
+      </aside>
+    </section>
+
+    <hr>
+
+    <!-- ===================== Beat 1 — 좌표 ===================== -->
+    <section class="beat" id="beat-1">
+      <div class="beat-header">
+        <span class="beat-num">01</span>
+        <h2>좌표 — 폴란드는 어디 있는가</h2>
+        <span class="beat-time">10분</span>
+      </div>
+
+      <p class="lead-in">먼저 지도를 펴자. 머릿속의 유럽 지도가 아닌, 진짜 지도 위에서 폴란드를 찾아본다.</p>
+
+      <div class="split">
+        <figure>
+          <img src="../assets/images/01/europe-poland-location.png" alt="유럽 지도 위 폴란드의 위치, 진한 색으로 강조됨">
+          <figcaption>
+            유럽 지도 위 폴란드의 위치. 대륙의 정중앙에 가깝다.
+            <span class="source">출처: Wikimedia Commons (CC BY-SA)</span>
+          </figcaption>
+        </figure>
+        <div class="text">
+          <p>유럽 대륙을 동서로 가로질러 보자. 서쪽 끝은 포르투갈, 동쪽 끝은 우랄 산맥. 그 가운데 어디쯤에 폴란드가 있을까?</p>
+          <p>지도 위에서 폴란드는 <strong>유럽의 거의 한가운데</strong>에 있다. 베를린에서 동쪽으로 약 600km, 모스크바에서 서쪽으로 약 1,200km. 발트 해를 위로, 카르파티아 산맥을 아래로 둔 거대한 평원의 정중앙이다.</p>
+          <p>물리적으로도 그렇지만, 지정학적으로도 폴란드의 좌표는 "사이"에 있다. 서쪽으로 독일, 동쪽으로 러시아 — 이 두 강대국 사이에서 천 년을 버텨온 위치. 폴란드를 이해하는 첫 번째 열쇠는 이 위치 감각이다.</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:48px;">7개국과 접경한다</h3>
+      <div class="prose">
+        <p>폴란드는 일곱 나라와 국경을 맞댄다. 시계 방향으로 보면 — <strong>독일</strong>(서), <strong>체코</strong>(남서), <strong>슬로바키아</strong>(남), <strong>우크라이나</strong>(동남), <strong>벨라루스</strong>(동), <strong>리투아니아</strong>(동북), 그리고 <strong>러시아</strong>(북, 칼리닌그라드 월경지). 거기에 발트 해 너머로는 스웨덴과 덴마크가 보인다.</p>
+        <p>한반도가 북쪽으로 단 한 나라(중국·러시아 두 나라 정도)와 접경한 것과는 전혀 다른 풍경이다. 이 사방의 접경은 폴란드인의 세계관에 깊은 흔적을 남겼다. <em>"우리는 항상 누군가와 이웃하고 있다"</em>는 감각.</p>
+      </div>
+
+      <figure class="full-fig">
+        <img src="../assets/images/01/poland-topo.jpg" alt="폴란드 지형도, 북쪽은 평원, 남쪽은 산맥">
+        <figcaption>
+          폴란드 지형도. 위(북쪽)는 발트 해와 평원, 아래(남쪽)는 수데티 산맥과 타트라 산맥. 가운데를 비스와 강이 남에서 북으로 가로지른다.
+          <span class="source">출처: Wikimedia Commons (CC BY-SA, Captain Blood)</span>
+        </figcaption>
+      </figure>
+
+      <h3>지형이 곧 운명이었다</h3>
+      <div class="prose">
+        <p>지도를 잘 보면, 폴란드의 대부분은 <strong>평지</strong>다. 폴란드라는 이름 자체가 슬라브어 <em>pole</em> — "들판"에서 왔다. 들판의 나라. 산맥은 남쪽 가장자리에만 있고, 나머지는 끝없이 펼쳐지는 평원이다.</p>
+        <p>이 지형은 폴란드 역사의 가장 큰 비극의 원인이기도 하다. 동에서든 서에서든, 군대가 진입하기에 이만큼 좋은 땅이 유럽에 없었다. 2회차에서 우리가 다룰 18세기 말의 "분할"과 20세기의 두 차례 세계대전이 모두 이 평원 위에서 벌어졌다.</p>
+        <p>그러나 같은 평원이 폴란드를 농업 강국으로 만들었고, 비스와 강을 따라 중세부터 곡물 무역의 중심지로 성장하게 했다. 지형은 비극이자 풍요였다.</p>
+      </div>
+
+      <div class="pdf-strip center">
+        <p><span class="strip-label">면적</span> 한반도 22.0만 km² &nbsp;↔&nbsp; 폴란드 31.3만 km² &nbsp;<em>(1.4배)</em></p>
+        <p><span class="strip-label">인구</span> 남북한 7,800만 &nbsp;↔&nbsp; 폴란드 3,800만 &nbsp;<em>(≈ ½)</em></p>
+        <p><span class="strip-label">접경국</span> 한반도 2개국 &nbsp;↔&nbsp; 폴란드 7개국 &nbsp;<em>(3.5배)</em></p>
+      </div>
+
+      <h3>그래서 — 동유럽인가, 중부유럽인가</h3>
+      <div class="prose">
+        <p>이제 첫 질문으로 돌아오자. 폴란드는 어느 유럽인가.</p>
+        <p>여기에는 <strong>지리적 답</strong>과 <strong>정치적 답</strong>이 다르다. 지리적으로 폴란드는 명백히 유럽의 한가운데, 즉 <strong>중부유럽(Central Europe)</strong>이다. 학계 — 옥스퍼드·케임브리지 사학과의 분류, 폴란드 정부와 EU의 공식 표현, 그리고 폴란드인 본인의 자기 인식 — 모두 한목소리다.</p>
+        <p>그런데 한국에서는 왜 "동유럽"이라고 부를까. 그 답은 짧다. <strong>냉전이다.</strong> 1945년부터 1989년까지 약 44년 동안 폴란드는 소련의 영향권 안에 있었고, 서방 언론은 이 영향권 전체를 "Eastern Bloc"이라고 묶어 불렀다. 그 표현이 한국 언론에도 번역되어 들어왔고, 냉전이 끝난 후에도 한국에서는 그 분류가 굳어진 채 지금까지 남아 있다.</p>
+        <p>오늘날 학술적으로 폴란드를 "동유럽"이라고 부르는 사람은 거의 없다. 폴란드의 자리는 — 다시 한번 — <strong>중부유럽</strong>이다.</p>
+      </div>
+
+      <aside class="sidenote">
+        <div class="sidenote-title">왜 정정이 중요한가</div>
+        명칭은 단순한 라벨이 아니라 <strong>역사적 시선</strong>을 담는다. 폴란드를 동유럽이라고 부르는 것은, 의도와 무관하게 냉전기 소련 영향권으로 폴란드를 묶어 보는 시선을 재생산한다. 폴란드인이 정중히 정정하는 이유다.
+      </aside>
+
+      <div class="summary-box">
+        <div class="summary-title">Beat 1 핵심 정리</div>
+        <ul>
+          <li>폴란드는 유럽 대륙의 <strong>거의 한가운데</strong>에 있다.</li>
+          <li>면적 31.3만 km² (<strong>한반도의 1.4배</strong>), 인구 약 <strong>3,800만</strong>, 접경국 7개.</li>
+          <li>국토 대부분이 평원 — 이름 자체가 "들판"(<em>pole</em>)에서 왔다.</li>
+          <li>지리적·학술적 답: <strong>중부유럽(Central Europe)</strong>. "동유럽" 분류는 냉전기 정치 분류의 잔재.</li>
+        </ul>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- ===================== Beat 2 — 사람 ===================== -->
+    <section class="beat" id="beat-2">
+      <div class="beat-header">
+        <span class="beat-num">02</span>
+        <h2>사람 — 폴란드인은 누구인가</h2>
+        <span class="beat-time">10분</span>
+      </div>
+
+      <p class="lead-in">땅을 봤으니 이제 사람을 본다. 폴란드인의 정체성은 세 겹으로 짜여 있다.</p>
+
+      <div class="prose">
+        <p>폴란드인을 한 문장으로 소개하자면 이렇게 된다 — <strong>"슬라브계의 몸을 가지고, 라틴 문자로 글을 쓰며, 가톨릭으로 기도하는 사람들."</strong> 이 세 가지가 어느 하나도 빠지지 않고 모두 폴란드의 일부다. 그리고 이 세 가지의 조합은 유럽에서도 흔치 않다.</p>
+      </div>
+
+      <div class="pdf-strip">
+        <p><span class="strip-label">① 슬라브</span> <em>언어</em> — 서슬라브어. 체코·슬로바키아와 한 가족. 폴란드어 약 4,500만 명 사용.</p>
+        <p><span class="strip-label">② 라틴</span> <em>문자</em> — 키릴 문자가 아닌 라틴 알파벳. Ł, Ż, Ź, Ć, Ą, Ę 같은 폴란드 고유 글자.</p>
+        <p><span class="strip-label">③ 가톨릭</span> <em>신앙</em> — 인구 약 87%가 로마 가톨릭. 정교회권(러시아)이 아닌 가톨릭권(이탈리아·스페인·프랑스)에 속함.</p>
+      </div>
+
+      <h3>왜 이 삼중구조가 중요한가</h3>
+      <div class="prose">
+        <p>지도를 다시 펴 보자. 폴란드 동쪽으로 우크라이나·벨라루스·러시아가 있고, 이들은 모두 <strong>슬라브계 + 키릴 문자 + 정교회</strong>의 조합이다. 폴란드 남쪽의 체코·슬로바키아는 <strong>슬라브계 + 라틴 문자 + 가톨릭</strong>으로 폴란드와 비슷하지만 종교적 강도가 훨씬 약하다.</p>
+        <p>즉 폴란드는 <strong>슬라브 세계에 속하면서도, 종교와 문자에서는 서방 가톨릭 세계에 속하는</strong> 독특한 자리에 있다. 966년 미에슈코 1세가 세례를 받으며 폴란드가 라틴 기독교 세계로 들어간 그 순간이 — 천 년이 지난 지금까지도 — 폴란드의 위치를 결정짓고 있다.</p>
+        <p>한 문화학자의 표현을 빌리면, 폴란드는 <em>"동방을 등지지 않으면서 서방의 일원이 된"</em> 거의 유일한 슬라브 국가다.</p>
+      </div>
+
+      <div class="split">
+        <figure>
+          <img src="../assets/images/01/jasna-gora.jpg" alt="폴란드 챈스토호바의 야스나 고라 수도원 전경">
+          <figcaption>
+            챈스토호바의 야스나 고라 수도원. 폴란드 가톨릭의 정신적 중심. "검은 마돈나" 성화로 유명하며, 매년 수백만 명이 순례한다.
+            <span class="source">출처: Wikimedia Commons (CC BY-SA)</span>
+          </figcaption>
+        </figure>
+        <div class="text">
+          <p>폴란드의 가톨릭은 단순한 종교 통계가 아니다. 18세기 분할로 나라가 사라졌을 때, 폴란드인을 폴란드인으로 묶어둔 거의 유일한 끈이 가톨릭 교회였다.</p>
+          <p>국가가 없는 123년 동안 본당과 수도원은 폴란드어 미사를 지키고 폴란드 책을 보관했다. 1978년 한 폴란드 추기경 카롤 보이티와가 <strong>요한 바오로 2세</strong>로 교황에 오른 것은, 폴란드인에게는 정치적 사건이기도 했다 — 그의 방문이 1980년 연대운동의 도화선이 되었기 때문이다.</p>
+        </div>
+      </div>
+
+      <h3>다인종 국가에서 단일민족 국가로 — 그리고 디아스포라</h3>
+      <div class="prose">
+        <p>흔히 폴란드는 "단일민족 국가"로 인식된다. 실제로 오늘날 폴란드 거주자의 97% 이상이 폴란드계다. 그러나 이것은 <strong>20세기의 비극이 만든 결과</strong>이지, 역사적으로 늘 그랬던 것은 아니다.</p>
+        <p>16세기부터 18세기까지 존속한 <strong>폴란드-리투아니아 연방</strong>은 당대 유럽에서 가장 다문화적인 나라였다. 폴란드인, 리투아니아인, 우크라이나인, 벨라루스인, 독일인, 아르메니아인, 그리고 무엇보다 유럽 최대의 <strong>유대인 공동체</strong>(전성기 약 300만 명)가 함께 살았다. 1264년의 칼리시 칙령은 유럽에서 가장 진보적인 유대인 권리 보호 법이었다.</p>
+        <p>이 다문화 폴란드는 20세기에 사라졌다. 2차 대전 중 나치 독일에 의한 홀로코스트로 폴란드 유대인의 약 90%가 살해되었고, 전후 국경 재조정과 인구 교환으로 독일계·우크라이나계도 대부분 떠났다. 우리가 만나는 "거의 폴란드계뿐인" 오늘의 폴란드는 이 역사의 결과다.</p>
+        <p>한편 폴란드 밖에는 약 <strong>2,000만 명</strong>의 폴란드계 디아스포라가 산다 — 시카고는 바르샤바 다음으로 폴란드인이 많은 도시다. 한국과 비슷한 측면이 여기 있다.</p>
+      </div>
+
+      <div class="summary-box">
+        <div class="summary-title">Beat 2 핵심 정리</div>
+        <ul>
+          <li>폴란드인의 정체성 = <strong>슬라브 + 라틴 + 가톨릭</strong>의 삼중구조.</li>
+          <li>슬라브 세계에 속하면서 서방 가톨릭권에 발을 디딘 거의 유일한 슬라브 국가.</li>
+          <li>966년 라틴 기독교 수용이 폴란드의 위치를 결정. 오늘날까지 가톨릭 인구 약 87%.</li>
+          <li>역사적으로는 다문화 국가였으나 20세기 비극으로 현재는 사실상 단일민족.</li>
+          <li>해외 폴란드계 약 2,000만 명 — 한국과 닮은 디아스포라 감각.</li>
+        </ul>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- ===================== Beat 3 — 상징 ===================== -->
+    <section class="beat" id="beat-3">
+      <div class="beat-header">
+        <span class="beat-num">03</span>
+        <h2>상징 — 폴란드는 자기를 무엇으로 드러내는가</h2>
+        <span class="beat-time">10분</span>
+      </div>
+
+      <p class="lead-in">한 나라의 상징을 들여다보면 그 나라가 어디에 가장 큰 무게를 두는지가 보인다. 폴란드의 상징들에는 공통점이 하나 있다.</p>
+
+      <div class="split">
+        <figure>
+          <img src="../assets/images/01/poland-coat-of-arms.png" alt="폴란드 국장 — 적색 방패 위 왕관 쓴 백독수리">
+          <figcaption>
+            폴란드 국장 — 적색 방패 위, 황금 왕관을 쓴 백독수리(<em>Orzeł Biały</em>). 10세기 피아스트 왕조부터 사용된 가장 오래된 국가 상징 중 하나.
+            <span class="source">출처: Wikimedia Commons (Public Domain)</span>
+          </figcaption>
+        </figure>
+        <div class="text">
+          <p>폴란드 국장은 <strong>적색 방패 위, 왕관을 쓴 백색 독수리</strong>다. 10세기 피아스트 왕조의 시조 레흐(Lech) 전설에서 비롯되었다고 전해지며, 가장 오래된 폴란드의 상징이다.</p>
+          <p>왕관은 폴란드가 공화국이 된 후에도 그대로 유지되었다. 사회주의 시기(1944–1989)에는 왕관이 제거되었지만, 1989년 자유 선거 직후 가장 먼저 한 일 중 하나가 <strong>왕관을 다시 씌우는 것</strong>이었다. 왕관은 군주제의 상징이 아니라 <em>주권의 회복</em>을 뜻한다.</p>
+        </div>
+      </div>
+
+      <div class="split">
+        <figure>
+          <img src="../assets/images/01/poland-flag.svg" alt="폴란드 국기 — 위 흰색, 아래 적색">
+          <figcaption>
+            폴란드 국기. 위 흰색, 아래 적색. 19세기 봉기 깃발에서 유래해 1919년 공식 채택. 비율 5:8.
+            <span class="source">자체 제작 (공식 색 기준)</span>
+          </figcaption>
+        </figure>
+        <div class="text">
+          <p>국기는 단순하다 — <strong>위 흰색, 아래 적색</strong>. 적색은 국장의 방패 색, 백색은 국장의 독수리 색. 즉 국기는 국장을 단순화한 것이다.</p>
+          <p>그러나 이 단순함이 결정된 시기가 중요하다. 폴란드 국기의 색은 <strong>19세기 봉기 시대</strong>에 굳어졌다. 즉 폴란드라는 나라가 지도에서 사라져 있던 시기, 사람들이 적백 띠를 두르고 거리에서 봉기하던 시기다. 국기 자체가 <em>저항의 상징</em>으로 태어난 것이다.</p>
+        </div>
+      </div>
+
+      <h3>국가 — "폴란드는 아직 죽지 않았다"</h3>
+      <div class="prose">
+        <p>그러나 폴란드의 상징 중 가장 무거운 것은 따로 있다. <strong>국가(國歌)</strong>다. 폴란드 국가의 정식 제목은 <em>"마주레크 동브로프스키에고"</em>(Mazurek Dąbrowskiego, 동브로프스키의 마주르카)이고, 첫 줄은 이렇게 시작한다.</p>
+      </div>
+
+      <blockquote class="pullquote">
+        <em>Jeszcze Polska nie zginęła,<br>
+        kiedy my żyjemy.</em><br><br>
+        폴란드는 아직 죽지 않았다,<br>
+        우리가 살아 있는 한.
+        <cite>— Mazurek Dąbrowskiego (1797), 폴란드 국가 첫 두 행</cite>
+      </blockquote>
+
+      <div class="prose">
+        <p>이 가사가 <strong>1797년</strong>에 쓰였다는 사실이 핵심이다. 1797년 — 2년 전인 1795년에 폴란드는 프로이센·러시아·오스트리아의 제3차 분할로 지도에서 완전히 사라졌다. 폴란드라는 나라가 더 이상 존재하지 않던 그 시점에, 이탈리아에서 나폴레옹 휘하 폴란드 군단으로 싸우던 유제프 비비츠키(Józef Wybicki)가 이 노래를 썼다.</p>
+        <p>"우리가 살아 있는 한 폴란드도 살아 있다." 이 한 문장은 그 후 123년 동안 — 폴란드가 1918년 마침내 다시 독립할 때까지 — 세대를 가로질러 노래로 불렸다. 그리고 1918년 부활한 폴란드가 가장 먼저 한 일은 이 노래를 국가로 채택하는 것이었다.</p>
+        <p>오늘날 폴란드 사람들이 이 가사를 부를 때, 그들은 단순히 애국심을 부르고 있는 것이 아니다. 그들은 <strong>123년의 부재</strong>를 부르고 있다.</p>
+      </div>
+
+      <aside class="sidenote">
+        <div class="sidenote-title">우연한 연결 — 마주르카</div>
+        국가의 형식은 <strong>마주르카</strong> — 폴란드 시골의 민속 춤곡 박자. 이 박자를 세계 음악사에 올린 사람이 바로 다음 그림의 인물, <strong>프레데리크 쇼팽</strong>이다. 쇼팽이 평생 마주르카 50여 곡을 작곡한 것은 우연이 아니다. 그것 또한 사라진 조국을 부르는 그의 방식이었다. (3회차에서 자세히 다룬다.)
+      </aside>
+
+      <figure>
+        <img src="../assets/images/01/chopin-1849.png" alt="프레데리크 쇼팽의 1849년 다게레오타입 — 사망 직전 마지막 사진" style="max-width:420px; margin: 0 auto;">
+        <figcaption style="text-align:center; max-width:420px; margin-left:auto; margin-right:auto;">
+          프레데리크 쇼팽, 1849년. 사망하던 해 촬영된 다게레오타입. 그의 마주르카는 사라진 조국을 부르는 또 하나의 국가였다.
+          <span class="source">촬영: Louis-Auguste Bisson / Public Domain</span>
+        </figcaption>
+      </figure>
+
+      <h3>왜 폴란드의 상징은 모두 "사라진 시대"에서 왔는가</h3>
+      <div class="prose">
+        <p>여기까지의 상징들을 다시 모아보자.</p>
+        <p>국장의 백독수리는 가장 오래된 상징이지만, 우리가 본 그 형태로 정착된 것은 <strong>분할 이후 부활을 꿈꾸던 시기</strong>다. 적백 국기의 색이 굳어진 것은 <strong>19세기 봉기 시대</strong>다. 국가는 <strong>나라가 사라진 1797년</strong>에 쓰였다. 쇼팽의 마주르카 50곡은 <strong>그가 평생 망명자로 살던 시기</strong>에 작곡되었다.</p>
+        <p>즉 우리가 폴란드라고 부르는 이 나라의 정체성을 형성한 상징들은, <strong>거의 모두 폴란드가 폴란드가 아니었던 시기에 만들어졌다.</strong> 이것이 폴란드를 이해하는 두 번째 열쇠다.</p>
+        <p>이 사실 하나를 손에 쥐고 폴란드를 여행하면, 바르샤바 구시가지의 벽돌 색이 왜 너무 깨끗한지(2차 대전 후 도시 전체를 다시 쌓아 올렸기 때문이다), 폴란드인이 왜 자기 역사를 그렇게 자주 이야기하는지(잊으면 사라지기 때문이다), 그리고 왜 그들이 자신을 "동유럽"이 아닌 "중부유럽"이라고 정정하는지(자기 정체성을 스스로 정의하는 일이 그들에게는 천 년의 과제이기 때문이다) — 그 모든 것이 이어진다.</p>
+      </div>
+
+      <div class="summary-box">
+        <div class="summary-title">Beat 3 핵심 정리</div>
+        <ul>
+          <li>폴란드의 국장은 적색 방패 위 <strong>왕관 쓴 백독수리</strong>. 왕관은 주권의 회복을 뜻한다.</li>
+          <li>국기의 적백 색은 19세기 봉기 시대에 굳어진 <strong>저항의 색</strong>.</li>
+          <li>국가의 첫 줄: <em>"폴란드는 아직 죽지 않았다"</em> — 나라가 사라진 1797년에 쓰임.</li>
+          <li>국가의 박자는 마주르카 — 쇼팽이 세계 음악사에 올린 폴란드 민속 춤곡.</li>
+          <li><strong>폴란드의 상징은 모두 "사라진 시대"의 흔적이다.</strong></li>
+        </ul>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- ===================== 마무리 — 다음 회차 예고 ===================== -->
+    <section id="next">
+      <div class="next-up">
+        <span class="kicker">다음 회차 예고</span>
+        <h3>2회 · 천 년의 역사 — 사라졌던 나라가 어떻게 돌아왔는가</h3>
+        <p>오늘 우리는 폴란드의 상징들이 모두 "사라진 시대"에서 왔다는 사실에 멈춰 섰다. 다음 회에는 그 "사라진 시대"가 어떻게 시작되어, 어떻게 끝났는지를 추적한다. 황금시대의 폴란드-리투아니아 연방, 18세기의 세 차례 분할, 두 차례 세계대전, 그리고 1980년 그단스크의 한 조선소에서 시작된 연대(Solidarność) — 한 나라의 죽음과 부활의 천 년.</p>
+        <div class="actions">
+          <a href="../index.html" class="btn">↑ 메인으로</a>
+          <a href="../02-history.html" class="btn primary">2회로 →</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <p>폴란드 교양강의 · 1회차 — 폴란드라는 나라</p>
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>

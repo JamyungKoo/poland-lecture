@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 폴란드 국기 (Flag of Poland) — 공식 비율 5:8, 위 흰색·아래 적색 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Flag of Poland">
+  <title>폴란드 국기</title>
+  <rect width="800" height="500" fill="#ffffff"/>
+  <rect y="250" width="800" height="250" fill="#dc143c"/>
+</svg>

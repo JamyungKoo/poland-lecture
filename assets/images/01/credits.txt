@@ -1,0 +1,49 @@
+1회차 이미지 출처 (Image Credits — Lecture 1)
+=============================================
+
+모든 이미지는 Wikimedia Commons에서 다운로드. 라이선스는 각 파일 페이지에서 확인 가능.
+
+[1] europe-poland-location.png
+    원본: File:Poland in Europe (-rivers -mini map).svg
+    https://commons.wikimedia.org/wiki/File:Poland_in_Europe_(-rivers_-mini_map).svg
+    라이선스: CC BY-SA 3.0 / 작가: Wikimedia Commons contributors
+
+[2] poland-topo.jpg
+    원본: File:Poland topo.jpg
+    https://commons.wikimedia.org/wiki/File:Poland_topo.jpg
+    라이선스: CC BY-SA 3.0 / 작가: Captain Blood (Wikimedia)
+
+[3] poland-coat-of-arms.png
+    원본: File:Herb Polski.svg (폴란드 공화국 국장)
+    https://commons.wikimedia.org/wiki/File:Herb_Polski.svg
+    라이선스: Public Domain (폴란드 공식 상징)
+
+[4] poland-flag.svg
+    자체 제작 (비율 5:8, 상단 흰색·하단 적색 #DC143C). 폴란드 공식 국기 색 기준.
+
+[5] chopin-1849.png
+    원본: File:Frederic Chopin just after his death, 1849, daguerreotype.png
+    https://commons.wikimedia.org/wiki/File:Frederic_Chopin_just_after_his_death,_1849,_daguerreotype.png
+    촬영: Louis-Auguste Bisson, 1849 / 라이선스: Public Domain (저작권 만료)
+
+[6] tatra-morskie-oko.jpg
+    원본: File:Morskie Oko o poranku.jpg (타트라 산맥의 모르스키에 오코 호수)
+    https://commons.wikimedia.org/wiki/File:Morskie_Oko_o_poranku.jpg
+    라이선스: CC BY-SA 4.0
+
+[7] jasna-gora.jpg
+    원본: File:Jasna Góra i otoczenie 06.jpg (야스나 고라 수도원)
+    https://commons.wikimedia.org/wiki/File:Jasna_G%C3%B3ra_i_otoczenie_06.jpg
+    라이선스: CC BY-SA 4.0
+
+[8] warsaw-old-town.jpg
+    원본: File:Market Square Warsaw (22594p).jpg (바르샤바 구시가지 시장 광장)
+    https://commons.wikimedia.org/wiki/File:Market_Square_Warsaw_(22594p).jpg
+    라이선스: CC BY-SA 4.0
+
+
+사용 안내
+---------
+- CC BY-SA 라이선스 이미지는 출처와 라이선스를 명기하는 한 자유 사용 가능.
+- 본 강의자료 외 배포 시 동일 라이선스(SA)로 공개해야 합니다.
+- Public Domain 이미지는 자유 사용 가능.
